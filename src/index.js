@@ -10,36 +10,55 @@ class Visitor {
     this.assistedBy = assistedBy;
   }
   // Storing data:
-   save() {
+  save() {
     fs.writeFile(
       "visitor_" + this.fullname + ".json",
-      "utf8",
       JSON.stringify(this, null, 4),
       function(err) {
-          if (err){
-              throw err
-          }
+        if (err) {
+          console.log("error", err);
+        } else {
+          console.log("file written");
+        }
       }
     );
   }
 
- load() {
-    fs.readFile("visitor_" + this.fullname
-    + ".json", "utf8",
-    function(
-      err,
-      data
-    ) { 
-        if (err){
-            throw err
-        } else {
-            console.log(data)
+  load() {
+    fs.readFile("visitor_" + this.fullname + ".json", function(err, data) {
+      if (err) {
+        if (this.fullname === "") {
+          throw err;
         }
+      } else {
+        data = JSON.parse(data);
+        console.log(data);
+      }
     });
   }
 }
 
-let romeo = new Visitor("Romeo");
+let romeo = new Visitor(
+  "Romeo",
+  18,
+  "28/02/2020",
+  "15:30",
+  "Visitor was rather cray-cray",
+  "Teboho"
+);
 
-console.log(romeo.save());
-console.log(romeo.load());
+let yoki = new Visitor(
+  "Thuli",
+  20,
+  "25/02/2020",
+  "14:00",
+  "Visitor was amazing",
+  "Thabo"
+);
+
+romeo.save();
+yoki.save();
+yoki.load();
+romeo.load();
+
+module.exports = Visitor;

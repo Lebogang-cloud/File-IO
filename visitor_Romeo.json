@@ -1,3 +1,8 @@
 {
-    "fullname": "Romeo"
+    "fullname": "Romeo",
+    "age": 18,
+    "dateOfVisit": "28/02/2020",
+    "timeOfVisit": "15:30",
+    "comments": "Visitor was rather cray-cray",
+    "assistedBy": "Teboho"
 }
