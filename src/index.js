@@ -14,7 +14,7 @@ class Visitor {
     fs.writeFile(
       "visitor_" + this.fullname + ".json",
       JSON.stringify(this, null, 4),
-      function(err) {
+      (err) => {
         if (err) {
           console.log("error", err);
         } else {
@@ -25,15 +25,18 @@ class Visitor {
   }
 
   load() {
-    fs.readFile("visitor_" + this.fullname + ".json", function(err, data) {
+    fs.readFile("visitor_" + this.fullname + ".json", "utf-8", (err, jsonString) => {
       if (err) {
-        if (this.fullname === "") {
-          throw err;
-        }
+        console.log("error reading file", err)
+     
       } else {
-        data = JSON.parse(data);
+        try{
+       const data = JSON.parse(jsonString);
         console.log(data);
+      }catch(err){
+        console.log("error parsing JSON", err)
       }
+    }
     });
   }
 }
