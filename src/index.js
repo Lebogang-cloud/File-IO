@@ -14,9 +14,9 @@ class Visitor {
     fs.writeFile(
       "visitor_" + this.fullname + ".json",
       JSON.stringify(this, null, 4),
-      (err) => {
+      err => {
         if (err) {
-          console.log("error", err);
+          throw ("error", +err);
         } else {
           console.log("file written");
         }
@@ -25,43 +25,18 @@ class Visitor {
   }
 
   load() {
-    fs.readFile("visitor_" + this.fullname + ".json", "utf-8", (err, jsonString) => {
+    fs.readFile("visitor_" + this.fullname + ".json", (err, jsonString) => {
       if (err) {
-        console.log("error reading file", err)
-     
+        throw ("error reading file", +err);
       } else {
-        try{
-       const data = JSON.parse(jsonString);
-        console.log(data);
-      }catch(err){
-        console.log("error parsing JSON", err)
+        try {
+          const data = JSON.parse(jsonString);
+          console.log(data);
+        } catch (err) {
+          console.log("error parsing JSON", err);
+        }
       }
-    }
     });
   }
 }
-
-let romeo = new Visitor(
-  "Romeo",
-  18,
-  "28/02/2020",
-  "15:30",
-  "Visitor was rather cray-cray",
-  "Teboho"
-);
-
-let yoki = new Visitor(
-  "Thuli",
-  20,
-  "25/02/2020",
-  "14:00",
-  "Visitor was amazing",
-  "Thabo"
-);
-
-romeo.save();
-yoki.save();
-yoki.load();
-romeo.load();
-
 module.exports = Visitor;
